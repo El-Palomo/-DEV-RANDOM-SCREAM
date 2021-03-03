@@ -11,3 +11,4 @@ Download: https://www.vulnhub.com/entry/devrandom-scream,47/
 Puedes descargar el XP desde aquí: https://archive.org/details/WinXPProSP3x86 
 Importante: También necesitarás el SERIAL de Windows XP pero eso lo obtienes en Google.
 
+<img src="https://github.com/El-Palomo/-DEV-RANDOM-SCREAM/blob/main/scream1.jpg" width=80% />
