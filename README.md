@@ -2,3 +2,5 @@
 Desarrollo del CTF /DEV/RANDOM: SCREAM
 
 Download: https://www.vulnhub.com/entry/devrandom-scream,47/
+
+## Configuración ANTES DE INICIAR
